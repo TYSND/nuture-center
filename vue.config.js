@@ -7,7 +7,7 @@ function resolve (dir) {
 module.exports = {
   outputDir: process.env.outputDir,
   productionSourceMap: false, // 关闭production模式的sourcemap
-  publicPath: '/video/', // 部署服务器根目录
+  publicPath: '', // 部署服务器根目录
   configureWebpack: {
     resolve: {
       extensions: ['.js', '.vue', '.json'],

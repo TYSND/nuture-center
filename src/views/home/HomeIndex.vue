@@ -1,5 +1,7 @@
 <template>
-  $END$
+  <div class="home-index">
+    this is index
+  </div>
 </template>
 
 <script>
