@@ -156,6 +156,10 @@
         display: flex;
         justify-content: space-between;
         white-space: nowrap;
+        overflow: auto;
+        /deep/ .el-link--inner {
+          padding-right: 10px;
+        }
       }
     }
   }
