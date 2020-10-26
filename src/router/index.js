@@ -8,16 +8,16 @@ import VueRouter from 'vue-router'
 const HomeIndex = () => import('@/views/home/HomeIndex.vue')
 const HomeView = () => import('@/views/home/HomeView.vue')
 const BedManage = () => import('@/views/bed-manage/BedManage.vue')
-// const AccInfo = () => import('@/views/acc/AccInfo.vue')
-// const RegisterView = () => import('@/views/home/RegisterView.vue')
-// const LoginView = () => import('@/views/home/LoginView.vue')
-// const CycleCustomer = () => import('@/views/customer/CycleCustomer.vue')
-// const SingleCustomer = () => import('@/views/customer/SingleCustomer.vue')
-// const AddCustomer = () => import('@/views/customer/options/AddCustomer.vue')
-// const EditCustomer = () => import('@/views/customer/options/EditCustomer.vue')
-// const CustomerInfo = () => import('@/views/customer/options/CustomerInfo.vue')
-// const InvoiceList = () => import('@/views/customer/options/InvoiceList.vue')
-// const AddInvoice = () => import('@/views/customer/options/AddInvoice.vue')
+const CheckIn = () => import('@/views/check-in/CheckIn.vue')
+const CheckOut = () => import('@/views/check-out/CheckOut.vue')
+const GoOut = () => import('@/views/go-out/GoOut.vue')
+const MealManage = () => import('@/views/meal-manage/MealManage.vue')
+const MealCalendar = () => import('@/views/meal-calendar/MealCalendar.vue')
+const NurseContent = () => import('@/views/nurse-content/NurseContent.vue')
+const NurseHistory = () => import('@/views/nurse-history/NurseHistory.vue')
+const NurseLevel = () => import('@/views/nurse-level/NurseLevel.vue')
+const ServiceFocus = () => import('@/views/service-focus/ServiceFocus.vue')
+const ServiceObj = () => import('@/views/service-obj/ServiceObj.vue')
 // const BusinessList = () => import('@/views/customer/options/BusinessList')
 // const EmployeeManage = () => import('@/views/sys/EmployeeManage')
 // const UserFeedback = () => import('@/views/feedback/UserFeedback')
@@ -55,95 +55,106 @@ const routes = [
       { path: '', component: BedManage }
     ]
   },
-  // {
-  //   path: '/register',
-  //   component: RegisterView
-  // },
-  // {
-  //   path: '/login',
-  //   component: LoginView,
-  //   beforeEnter: loginBeforeEnter
-  // },
-  // {
-  //   path: '/customer-manage',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: CycleCustomer }
-  //   ]
-  // },
-  // {
-  //   path: '/cycle-customer',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: CycleCustomer }
-  //   ]
-  // },
-  // {
-  //   path: '/single-customer',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: SingleCustomer }
-  //   ]
-  // },
-  // {
-  //   path: '/add-customer',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: AddCustomer }
-  //   ]
-  // },
-  // {
-  //   path: '/edit-customer',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: EditCustomer }
-  //   ]
-  // },
-  // {
-  //   path: '/customer-info',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: CustomerInfo }
-  //   ]
-  // },
-  // {
-  //   path: '/invoice-list',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: InvoiceList }
-  //   ]
-  // },
-  // {
-  //   path: '/add-invoice',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: AddInvoice }
-  //   ]
-  // },
+  {
+    path: '/check-in',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: CheckIn }
+    ]
+  },
+  {
+    path: '/check-out',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: CheckOut }
+    ]
+  },
+  {
+    path: '/go-out',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: GoOut }
+    ]
+  },
+  {
+    path: '/meal-calendar',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: MealCalendar }
+    ]
+  },
+  {
+    path: '/meal-manage',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: MealManage }
+    ]
+  },
+  {
+    path: '/nurse-content',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: NurseContent }
+    ]
+  },
+  {
+    path: '/nurse-history',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: NurseHistory }
+    ]
+  },
+  {
+    path: '/nurse-level',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: NurseLevel }
+    ]
+  },
+  {
+    path: '/service-focus',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: ServiceFocus }
+    ]
+  },
+  {
+    path: '/service-obj',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: ServiceObj }
+    ]
+  }
   // {
   //   path: '/company-found',
   //   component: HomeView,

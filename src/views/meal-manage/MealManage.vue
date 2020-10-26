@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-    this is index
+  <div class="meal-manage">
+    this is meal manage
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "MealManage"
   }
 </script>
 

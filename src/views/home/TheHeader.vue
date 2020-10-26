@@ -2,14 +2,21 @@
   <div class="the-header">
     <div class="logo">
       <i class="el-icon-menu" @click="$emit('collapse')"></i>
-      <img src="@/assets/logo.png" alt="Logo" @click="$router.push('/')">
+      <img src="@/assets/logo.png" alt="Logo" @click="goIndex">
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "TheHeader"
+    name: "TheHeader",
+    methods: {
+      goIndex () {
+        if (this.$route.path !== '/') {
+          this.$router.push('/')
+        }
+      }
+    }
   }
 </script>
 
@@ -29,7 +36,7 @@
         vertical-align: middle;
       }
       img{
-        height: 24px;
+        height: 40px;
         width: auto;
         vertical-align: middle;
         margin-left: 20px;

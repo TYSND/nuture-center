@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-    this is index
+  <div class="go-out">
+    this is go out
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "GoOut"
   }
 </script>
 

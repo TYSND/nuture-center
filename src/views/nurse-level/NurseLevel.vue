@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-    this is index
+  <div class="nurse-level">
+    this is nurse level
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "NurseLevel"
   }
 </script>
 

@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-    this is index
+  <div class="check-in">
+    this is check in
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "CheckIn"
   }
 </script>
 

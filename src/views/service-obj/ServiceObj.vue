@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-    this is index
+  <div class="service-obj">
+    this is service obj
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "ServiceObj"
   }
 </script>
 
