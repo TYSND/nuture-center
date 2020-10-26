@@ -34,9 +34,9 @@
             icon: 'el-icon-s-data'
           },
           {
-            name: '护理内容',
-            route: '/nurse-content',
-            icon: 'el-icon-s-marketing'
+            name: '客户列表',
+            route: '/customer-list',
+            icon: 'el-icon-s-custom'
           },
           {
             name: '护理记录',
@@ -48,11 +48,11 @@
             route: '/meal-calendar',
             icon: 'el-icon-s-shop'
           },
-          {
-            name: '膳食管理',
-            route: '/meal-manage',
-            icon: 'el-icon-s-ticket'
-          },
+          // {
+          //   name: '膳食管理',
+          //   route: '/meal-manage',
+          //   icon: 'el-icon-s-ticket'
+          // },
           {
             name: '入住登记',
             route: '/check-in',
@@ -71,7 +71,7 @@
           {
             name: '设置服务对象',
             route: '/service-obj',
-            icon: 'el-icon-s-custom'
+            icon: 'el-icon-s-management'
           },
           {
             name: '服务关注',

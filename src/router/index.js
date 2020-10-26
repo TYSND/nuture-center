@@ -10,6 +10,7 @@ const HomeView = () => import('@/views/home/HomeView.vue')
 const BedManage = () => import('@/views/bed-manage/BedManage.vue')
 const CheckIn = () => import('@/views/check-in/CheckIn.vue')
 const CheckOut = () => import('@/views/check-out/CheckOut.vue')
+const CustomerList = () => import('@/views/customer-list/CustomerList.vue')
 const GoOut = () => import('@/views/go-out/GoOut.vue')
 const MealManage = () => import('@/views/meal-manage/MealManage.vue')
 const MealCalendar = () => import('@/views/meal-calendar/MealCalendar.vue')
@@ -73,6 +74,16 @@ const routes = [
     },
     children: [
       { path: '', component: CheckOut }
+    ]
+  },
+  {
+    path: '/customer-list',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: CustomerList }
     ]
   },
   {
