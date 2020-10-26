@@ -6,7 +6,8 @@ import VueRouter from 'vue-router'
 // import userApi from '@/api/user.js'
 
 const HomeIndex = () => import('@/views/home/HomeIndex.vue')
-// const HomeView = () => import('@/views/home/HomeView.vue')
+const HomeView = () => import('@/views/home/HomeView.vue')
+const BedManage = () => import('@/views/bed-manage/BedManage.vue')
 // const AccInfo = () => import('@/views/acc/AccInfo.vue')
 // const RegisterView = () => import('@/views/home/RegisterView.vue')
 // const LoginView = () => import('@/views/home/LoginView.vue')
@@ -36,18 +37,24 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: HomeIndex
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: HomeIndex }
+    ]
   },
-  // {
-  //   path: '/user-info',
-  //   component: HomeView,
-  //   meta: {
-  //     requireAuth: true
-  //   },
-  //   children: [
-  //     { path: '', component: AccInfo }
-  //   ]
-  // },
+  {
+    path: '/bed-manage',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: BedManage }
+    ]
+  },
   // {
   //   path: '/register',
   //   component: RegisterView

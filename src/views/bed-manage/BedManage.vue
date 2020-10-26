@@ -1,13 +1,12 @@
 <template>
-  <div class="home-index">
-
+  <div class="bed-manage">
+    this is bed manage
   </div>
 </template>
 
 <script>
-
   export default {
-    name: "HomeIndex"
+    name: "BedManage"
   }
 </script>
 
