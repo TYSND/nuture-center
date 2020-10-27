@@ -19,7 +19,8 @@ const NurseHistory = () => import('@/views/nurse-history/NurseHistory.vue')
 const NurseLevel = () => import('@/views/nurse-level/NurseLevel.vue')
 const ServiceFocus = () => import('@/views/service-focus/ServiceFocus.vue')
 const ServiceObj = () => import('@/views/service-obj/ServiceObj.vue')
-// const BusinessList = () => import('@/views/customer/options/BusinessList')
+
+const AddBed = () => import('@/views/bed-manage/AddBed.vue')
 // const EmployeeManage = () => import('@/views/sys/EmployeeManage')
 // const UserFeedback = () => import('@/views/feedback/UserFeedback')
 // const EditCompany = () => import('@/views/acc/EditCompany')
@@ -54,6 +55,26 @@ const routes = [
     },
     children: [
       { path: '', component: BedManage }
+    ]
+  },
+  {
+    path: '/bed-manage/add',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddBed }
+    ]
+  },
+  {
+    path: '/bed-manage/edit',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddBed }
     ]
   },
   {

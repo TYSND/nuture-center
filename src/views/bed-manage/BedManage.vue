@@ -6,7 +6,7 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">新增床位</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/bed-manage/add')">新增床位</el-button>
       </div>
       <el-form class="form" ref="form" :model="form" :inline="true" size="small">
         <el-form-item>
@@ -63,9 +63,6 @@
                          label="结束时间"
                          show-overflow-tooltip
                          min-width="90">
-          <template v-slot="scope">
-            <span>{{customerLevel[scope.row.customerLevel]}}</span>
-          </template>
         </el-table-column>
         <el-table-column header-align="center" align="center"
                          prop="newest"
@@ -98,6 +95,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name: "BedManage",
     data () {
@@ -105,7 +103,11 @@
         pageNum: 0,
         pageSize: 10,
         totalNum: 0,
-        bedInfo: [],
+        bedInfo: [
+          {
+            customerName: 'aaa'
+          }
+        ],
         form: {
           status: null
         },
@@ -117,11 +119,19 @@
       }
     },
     methods: {
+      ...mapMutations(['setBedInfo']),
       changePage (page) {
         this.search(page - 1)
       },
       changeStatus (value) {
         console.log(value)
+      },
+      showInfo (row) {
+        console.log(row)
+      },
+      edit (row) {
+        this.setBedInfo(row)
+        this.$router.push('/bed-manage/edit')
       }
     }
   }
