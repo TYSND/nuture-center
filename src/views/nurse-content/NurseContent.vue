@@ -12,7 +12,7 @@
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="nurseLevel"
+          :data="nurseContent"
           tooltip-effect="dark"
           border
           style="width: 100%">

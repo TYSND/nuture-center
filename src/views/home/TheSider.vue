@@ -68,11 +68,11 @@
             route: '/go-out',
             icon: 'el-icon-s-promotion'
           },
-          {
-            name: '设置服务对象',
-            route: '/service-obj',
-            icon: 'el-icon-s-management'
-          },
+          // {
+          //   name: '设置服务对象',
+          //   route: '/service-obj',
+          //   icon: 'el-icon-s-management'
+          // },
           {
             name: '服务关注',
             route: '/service-focus',
