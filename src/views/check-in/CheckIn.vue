@@ -6,7 +6,7 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">登记</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/check-in/add')">登记</el-button>
       </div>
       <div class="radio-group">
         <el-radio-group v-model="elderType" size="small" @change="changeType">
@@ -150,6 +150,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name: "CheckIn",
     data () {
@@ -158,15 +159,24 @@
         pageSize: 10,
         totalNum: 0,
         elderType: '活力老人',
-        elderList: []
+        elderList: [
+          {
+            customerContact: 'aaa'
+          }
+        ]
       }
     },
     methods: {
+      ...mapMutations(['setCheckInInfo']),
       changePage (page) {
         this.search(page - 1)
       },
       changeType (value) {
         console.log(value)
+      },
+      edit (row) {
+        this.setCheckInInfo(row)
+        this.$router.push('/check-in/edit')
       }
     }
   }

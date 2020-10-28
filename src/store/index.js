@@ -7,9 +7,9 @@ export default new Vuex.Store({
   state: {
     // token: localStorage.getItem('token'),
     bedInfo: JSON.parse(sessionStorage.getItem('bedInfo')) || {},
-    companyInfo: JSON.parse(sessionStorage.getItem('companyInfo')) || {},
-    account: localStorage.getItem('account'),
-    user: JSON.parse(localStorage.getItem('user')) || {},
+    checkInInfo: JSON.parse(sessionStorage.getItem('checkInInfo')) || {},
+    // account: localStorage.getItem('account'),
+    // user: JSON.parse(localStorage.getItem('user')) || {},
     // companyType: {
     //   1: '有限责任公司',
     //   7: '有限责任公司（自然人控股）',
@@ -31,9 +31,9 @@ export default new Vuex.Store({
       state.bedInfo = bedInfo
       sessionStorage.setItem('bedInfo', JSON.stringify(bedInfo))
     },
-    setCompanyInfo (state, companyInfo) {
-      state.companyInfo = companyInfo
-      sessionStorage.setItem('companyInfo', JSON.stringify(companyInfo))
+    setCheckInInfo (state, checkInInfo) {
+      state.checkInInfo = checkInInfo
+      sessionStorage.setItem('checkInInfo', JSON.stringify(checkInInfo))
     },
     // setUser (state, user) {
     //   state.user = user
