@@ -6,7 +6,7 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">登记</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/check-out/add')">登记</el-button>
       </div>
     </div>
     <div class="search-res">
@@ -140,6 +140,10 @@
     methods: {
       changePage (page) {
         this.search(page - 1)
+      },
+      edit (row) {
+        console.log(row)
+        this.$router.push('/check-out/edit')
       }
     }
   }

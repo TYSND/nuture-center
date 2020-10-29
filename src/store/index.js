@@ -8,6 +8,7 @@ export default new Vuex.Store({
     // token: localStorage.getItem('token'),
     bedInfo: JSON.parse(sessionStorage.getItem('bedInfo')) || {},
     checkInInfo: JSON.parse(sessionStorage.getItem('checkInInfo')) || {},
+    checkOutInfo: JSON.parse(sessionStorage.getItem('checkOutInfo')) || {},
     // account: localStorage.getItem('account'),
     // user: JSON.parse(localStorage.getItem('user')) || {},
     // companyType: {
@@ -35,6 +36,10 @@ export default new Vuex.Store({
       state.checkInInfo = checkInInfo
       sessionStorage.setItem('checkInInfo', JSON.stringify(checkInInfo))
     },
+    setCheckOutInfo (state, checkOutInfo) {
+      state.checkOutInfo = checkOutInfo
+      sessionStorage.setItem('checkOutInfo', JSON.stringify(checkOutInfo))
+    },
     // setUser (state, user) {
     //   state.user = user
     //   localStorage.setItem('user', JSON.stringify(user))
@@ -45,9 +50,9 @@ export default new Vuex.Store({
       state.role = ''
       state.account = ''
       state.user = {}
-      localStorage.removeItem('token')
-      localStorage.removeItem('info')
-      localStorage.removeItem('role')
+      localStorage.removeItem('bedInfo')
+      localStorage.removeItem('checkInInfo')
+      localStorage.removeItem('checkOutInfo')
       localStorage.removeItem('user')
       localStorage.removeItem('account')
     }

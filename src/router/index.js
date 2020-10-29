@@ -22,6 +22,7 @@ const ServiceObj = () => import('@/views/service-obj/ServiceObj.vue')
 
 const AddBed = () => import('@/views/bed-manage/AddBed.vue')
 const AddCheckIn = () => import('@/views/check-in/AddCheckIn.vue')
+const AddCheckOut = () => import('@/views/check-out/AddCheckOut.vue')
 // const EmployeeManage = () => import('@/views/sys/EmployeeManage')
 // const UserFeedback = () => import('@/views/feedback/UserFeedback')
 // const EditCompany = () => import('@/views/acc/EditCompany')
@@ -116,6 +117,26 @@ const routes = [
     },
     children: [
       { path: '', component: CheckOut }
+    ]
+  },
+  {
+    path: '/check-out/add',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddCheckOut }
+    ]
+  },
+  {
+    path: '/check-out/edit',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddCheckOut }
     ]
   },
   {
