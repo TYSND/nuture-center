@@ -126,6 +126,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name: "CheckOut",
     data () {
@@ -138,11 +139,13 @@
       }
     },
     methods: {
+      ...mapMutations(['setCheckOutInfo']),
       changePage (page) {
         this.search(page - 1)
       },
       edit (row) {
-        console.log(row)
+        // console.log(row)
+        this.setCheckOutInfo(row)
         this.$router.push('/check-out/edit')
       }
     }

@@ -9,6 +9,7 @@ export default new Vuex.Store({
     bedInfo: JSON.parse(sessionStorage.getItem('bedInfo')) || {},
     checkInInfo: JSON.parse(sessionStorage.getItem('checkInInfo')) || {},
     checkOutInfo: JSON.parse(sessionStorage.getItem('checkOutInfo')) || {},
+    goOutInfo: JSON.parse(sessionStorage.getItem('goOutInfo')) || {},
     // account: localStorage.getItem('account'),
     // user: JSON.parse(localStorage.getItem('user')) || {},
     // companyType: {
@@ -39,6 +40,10 @@ export default new Vuex.Store({
     setCheckOutInfo (state, checkOutInfo) {
       state.checkOutInfo = checkOutInfo
       sessionStorage.setItem('checkOutInfo', JSON.stringify(checkOutInfo))
+    },
+    setGoOutInfo (state, goOutInfo) {
+      state.goOutInfo = goOutInfo
+      sessionStorage.setItem('goOutInfo', JSON.stringify(goOutInfo))
     },
     // setUser (state, user) {
     //   state.user = user

@@ -6,7 +6,7 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">登记</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/go-out/add')">登记</el-button>
         <el-button class="btn" type="success" size="small" @click="$router.push('/add-customer')">审核</el-button>
       </div>
     </div>
@@ -133,6 +133,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     name: "GoOut",
     data () {
@@ -144,8 +145,13 @@
       }
     },
     methods: {
+      ...mapMutations(['setGoOutInfo']),
       changePage (page) {
         this.search(page - 1)
+      },
+      edit (row) {
+        this.setGoOutInfo(row)
+        this.$router.push('/go-out/edit')
       }
     }
   }
