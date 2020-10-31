@@ -10,6 +10,7 @@ export default new Vuex.Store({
     checkInInfo: JSON.parse(sessionStorage.getItem('checkInInfo')) || {},
     checkOutInfo: JSON.parse(sessionStorage.getItem('checkOutInfo')) || {},
     goOutInfo: JSON.parse(sessionStorage.getItem('goOutInfo')) || {},
+    nurseContentInfo: JSON.parse(sessionStorage.getItem('nurseContentInfo')) || {},
     // account: localStorage.getItem('account'),
     // user: JSON.parse(localStorage.getItem('user')) || {},
     // companyType: {
@@ -45,21 +46,25 @@ export default new Vuex.Store({
       state.goOutInfo = goOutInfo
       sessionStorage.setItem('goOutInfo', JSON.stringify(goOutInfo))
     },
+    setNurseContentInfo (state, nurseContentInfo) {
+      state.nurseContentInfo = nurseContentInfo
+      sessionStorage.setItem('nurseContentInfo', JSON.stringify(nurseContentInfo))
+    },
     // setUser (state, user) {
     //   state.user = user
     //   localStorage.setItem('user', JSON.stringify(user))
     // },
     clear (state) {
-      state.token = ''
-      state.info = {}
-      state.role = ''
-      state.account = ''
-      state.user = {}
+      state.bedInfo = {}
+      state.checkInInfo = {}
+      state.checkOutInfo = {}
+      state.goOutInfo = {}
+      state.nurseContentInfo = {}
       localStorage.removeItem('bedInfo')
       localStorage.removeItem('checkInInfo')
       localStorage.removeItem('checkOutInfo')
-      localStorage.removeItem('user')
-      localStorage.removeItem('account')
+      localStorage.removeItem('goOutInfo')
+      localStorage.removeItem('nurseContentInfo')
     }
   }
 })

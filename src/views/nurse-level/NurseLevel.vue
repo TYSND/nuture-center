@@ -6,31 +6,38 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">添加护理级别</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">添加护理内容</el-button>
       </div>
     </div>
     <div class="search-res">
       <el-table
           ref="multipleTable"
           :data="nurseLevel"
+          :span-method="objectSpanMethod"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
+                         prop="nurseLevel"
                          label="护理级别"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="状态"
+                         prop="name"
+                         label="护理内容"
                          show-overflow-tooltip
                          min-width="120">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="备注"
+                         prop="price"
+                         label="护理内容详情"
+                         show-overflow-tooltip
+                         min-width="90">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="description"
+                         label="护理内容详情"
                          show-overflow-tooltip
                          min-width="90">
         </el-table-column>
@@ -42,51 +49,141 @@
             <div class="opt-links">
               <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
               <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-              <el-link class="opt-link" type="success" :underline="false" @click="setContent(scope.row)">设置护理内容</el-link>
+<!--              <el-link class="opt-link" type="success" :underline="false" @click="setContent(scope.row)">设置护理内容</el-link>-->
             </div>
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination
-          v-show="totalNum > pageSize"
-          class="pagination"
-          background
-          layout="prev, pager, next"
-          @current-change="changePage"
-          :current-page="pageNum + 1"
-          :page-size="pageSize"
-          :total="totalNum">
-      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+  import api from '@/api/api.js'
   export default {
     name: "NurseLevel",
     data () {
       return {
-        pageNum: 0,
-        pageSize: 10,
         totalNum: 0,
+        levelPos: {},
+        posList: [],
+        curPos: 0,
         nurseLevel: [
           {
-            customerContact: 'zzz'
-          }
-        ]
+            id: 1,
+            nurseLevelId: 1,
+            nurseLevel: '低',
+            name: '吃饭',
+            price: 100,
+            description: '3.sssssss'
+          },
+          {
+            id: 4,
+            nurseLevelId: 3,
+            nurseLevel: '高',
+            name: '体检',
+            price: 12,
+            description: ' hfdrhtsgsdfdhgs'
+          },
+          {
+            id: 2,
+            nurseLevelId: 1,
+            nurseLevel: '低',
+            name: '睡觉',
+            price: 243,
+            description: 'asdf.2'
+          },
+          {
+            id: 3,
+            nurseLevelId: 3,
+            nurseLevel: '高',
+            name: '治病',
+            price: 5342,
+            description: 'dfcbxzewrasf'
+          },
+          {
+            id: 4,
+            nurseLevelId: 2,
+            nurseLevel: '中',
+            name: '洗澡',
+            price: 12,
+            description: ' hfdrhtsgsdfdhgs'
+          },
+          {
+            id: 5,
+            nurseLevelId: 3,
+            nurseLevel: '高',
+            name: '理疗',
+            price: 543,
+            description: 'afdsaefas'
+          }]
       }
     },
     methods: {
+      search () {
+        api.getNurseContent().then(res => {
+          this.nurseLevel = res.data
+          this.totalNum = res.totalNum
+          this.dealArr()
+        })
+      },
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
       },
       changeStatus (value) {
         console.log(value)
       },
-      setContent (row) {
+      edit (row) {
         console.log(row)
         this.$router.push('/nurse-content')
+      },
+      dealArr () {
+        this.nurseLevel.sort((a, b) => a.nurseLevelId - b.nurseLevelId)
+        this.levelPos = {}
+        this.posList = []
+        // this.curPos = 0
+        if (this.nurseLevel.length > 0) {
+          let curLevel = this.nurseLevel[0].nurseLevelId
+          this.posList.push(0)
+          this.nurseLevel.forEach((cur, index) => {
+            if (cur.nurseLevelId !== curLevel) {
+              this.posList.push(index)
+              curLevel = cur.nurseLevelId
+            }
+          })
+          this.posList.push(this.nurseLevel.length)
+          this.posList.sort()
+          for (let i = 0; i < this.posList.length-1; i++) {
+            this.levelPos[this.posList[i]] = this.posList[i+1] - this.posList[i]
+          }
+        }
+        console.log(this.levelPos)
+      },
+      objectSpanMethod ({ rowIndex, columnIndex }) {
+        // row, column,
+        // console.log(row, column, rowIndex, columnIndex)
+        // console.log(rowIndex, columnIndex)
+        // 第一列
+        if (columnIndex === 0) {
+          if (this.posList.indexOf(rowIndex) !== -1) {
+            let rowspan = this.levelPos[rowIndex]
+            return {
+              rowspan: rowspan,
+              colspan: 1
+            }
+          } else {
+            return {
+              rowspan: 0,
+              colspan: 0
+            };
+          }
+        }
       }
+    },
+    created () {
+
+      this.search()
+      // console.log(this.levelPos)
     }
   }
 </script>

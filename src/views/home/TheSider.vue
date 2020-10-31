@@ -29,8 +29,8 @@
             icon: 'el-icon-s-home'
           },
           {
-            name: '护理级别',
-            route: '/nurse-level',
+            name: '护理内容',
+            route: '/nurse-content',
             icon: 'el-icon-s-data'
           },
           {

@@ -24,6 +24,7 @@ const AddBed = () => import('@/views/bed-manage/AddBed.vue')
 const AddCheckIn = () => import('@/views/check-in/AddCheckIn.vue')
 const AddCheckOut = () => import('@/views/check-out/AddCheckOut.vue')
 const AddGoOut = () => import('@/views/go-out/AddGoOut.vue')
+const AddNurseContent = () => import('@/views/nurse-content/AddNurseContent.vue')
 // const EmployeeManage = () => import('@/views/sys/EmployeeManage')
 // const UserFeedback = () => import('@/views/feedback/UserFeedback')
 // const EditCompany = () => import('@/views/acc/EditCompany')
@@ -208,6 +209,26 @@ const routes = [
     },
     children: [
       { path: '', component: NurseContent }
+    ]
+  },
+  {
+    path: '/nurse-content/add',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddNurseContent }
+    ]
+  },
+  {
+    path: '/nurse-content/edit',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddNurseContent }
     ]
   },
   {
