@@ -33,50 +33,59 @@
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="bedInfo"
+          :data="showList"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="left" align="left"
-                         prop="customerName"
+                         prop="roomNumber"
                          label="床位编号"
                          show-overflow-tooltip
                          min-width="240">
+        </el-table-column>
+        <el-table-column header-align="left" align="left"
+                         prop="bedStatus"
+                         label="入住状态"
+                         show-overflow-tooltip
+                         min-width="240">
           <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="showInfo(scope.row)">{{ scope.row.customerName }}</el-link>
+            <span>{{status[scope.row.bedStatus]}}</span>
           </template>
         </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerContact"
-                         label="入住人"
-                         show-overflow-tooltip
-                         min-width="80">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="起始时间"
-                         show-overflow-tooltip
-                         min-width="120">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="结束时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="newest"
-                         label="详细信息"
-                         show-overflow-tooltip
-                         min-width="150">
-        </el-table-column>
+        <!--        <el-table-column header-align="center" align="center"-->
+<!--                         prop="customerContact"-->
+<!--                         label="入住人"-->
+<!--                         show-overflow-tooltip-->
+<!--                         min-width="80">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         prop="customerContactNum"-->
+<!--                         label="起始时间"-->
+<!--                         show-overflow-tooltip-->
+<!--                         min-width="120">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         prop="customerLevel"-->
+<!--                         label="结束时间"-->
+<!--                         show-overflow-tooltip-->
+<!--                         min-width="90">-->
+<!--        </el-table-column>-->
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         prop="newest"-->
+<!--                         label="详细信息"-->
+<!--                         show-overflow-tooltip-->
+<!--                         min-width="150">-->
+<!--        </el-table-column>-->
         <el-table-column header-align="center" align="center"
                          label="操作"
                          min-width="100"
                          fixed="right">
           <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
             <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
+<!--            <div class="opt-links">-->
+<!--              <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>-->
+<!--              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>-->
+<!--            </div>-->
           </template>
         </el-table-column>
       </el-table>
@@ -96,43 +105,64 @@
 
 <script>
   import { mapMutations } from 'vuex'
+  import api from '@/api/api.js'
   export default {
     name: "BedManage",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
-        bedInfo: [
-          {
-            customerName: 'aaa'
-          }
-        ],
+        bedInfo: [],
+        showList: [],
         form: {
-          status: null
+          status: "2"
+        },
+        status: {
+          0: '未入住',
+          1: '已入住'
         },
         bedStatus: {
-          0: '全部床位',
+          2: '全部床位',
           1: '已入住',
-          2: '未入住'
+          0: '未入住'
         }
       }
     },
     methods: {
       ...mapMutations(['setBedInfo']),
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
       },
       changeStatus (value) {
-        console.log(value)
-      },
-      showInfo (row) {
-        console.log(row)
+        value = parseInt(value)
+        if (value === 2) {
+          this.showList = this.bedInfo
+          console.log('all',this.showList)
+        } else if (value === 1) {
+          this.showList = this.bedInfo.filter(cur => cur.bedStatus === 1)
+          console.log('1',this.showList)
+        } else if (value === 0) {
+          this.showList = this.bedInfo.filter(cur => cur.bedStatus === 0)
+          console.log('0',this.showList)
+        }
       },
       edit (row) {
         this.setBedInfo(row)
         this.$router.push('/bed-manage/edit')
       }
+    },
+    created () {
+      api.getBedList({
+        pageNum: this.pageNum,
+        pageSize: this.pageSize
+      }).then(res => {
+        console.log(res)
+        this.bedInfo = res.data
+        this.totalNum = res.totalNum
+        this.showList = this.bedInfo
+        console.log(this.showList)
+      })
     }
   }
 </script>
@@ -184,6 +214,15 @@
       font-size: 13px;
       .cell {
         font-size: 13px !important;
+      }
+      .opt-links {
+        display: flex;
+        justify-content: space-between;
+        white-space: nowrap;
+        overflow: auto;
+        /deep/ .el-link--inner {
+          padding-right: 10px;
+        }
       }
     }
   }
