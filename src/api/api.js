@@ -46,6 +46,27 @@ const deleteNurseContent = params => request({
   params
 })
 
+// 获取护理记录
+const getNurseHistory = params => request({
+  url: '/nurse_record',
+  method: 'get',
+  params
+})
+
+//新增护理记录
+const addNurseHistory = data => request({
+  url: '/nurse_record',
+  method: 'post',
+  data
+})
+
+//删除护理记录
+const deleteNurseHistory = data => request({
+  url: '/nurse_record',
+  method: 'delete',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -54,5 +75,8 @@ export default {
   getNurseContent,
   addNurseContent,
   editNurseContent,
-  deleteNurseContent
+  deleteNurseContent,
+  getNurseHistory,
+  addNurseHistory,
+  deleteNurseHistory
 }

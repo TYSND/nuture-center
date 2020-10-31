@@ -6,61 +6,49 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/add-customer')">添加护理记录</el-button>
+        <el-button class="btn" type="primary" size="small" @click="$router.push('/nurse-history/add')">添加护理记录</el-button>
       </div>
     </div>
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="customerList"
+          :data="nurseHistory"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
+                         prop="customerName"
                          label="客户姓名"
                          show-overflow-tooltip
-                         min-width="80">
+                         min-width="100">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="护理项目"
-                         show-overflow-tooltip
-                         min-width="120">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="护理时间"
+                         prop="nurseLevel"
+                         label="护理级别"
                          show-overflow-tooltip
                          min-width="90">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="数量"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
+                         prop="nurseContentName"
                          label="护理内容"
                          show-overflow-tooltip
-                         min-width="90">
+                         min-width="200">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="护理人员"
+                         prop="timestamp"
+                         label="护理时间"
                          show-overflow-tooltip
-                         min-width="90">
+                         min-width="200">
         </el-table-column>
         <el-table-column header-align="center" align="center"
                          label="操作"
                          min-width="100"
                          fixed="right">
           <template v-slot="scope">
-            <div class="opt-links">
-              <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
-              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-            </div>
+            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
+<!--            <div class="opt-links">-->
+<!--              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>-->
+<!--            </div>-->
           </template>
         </el-table-column>
       </el-table>
@@ -70,7 +58,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -79,27 +67,60 @@
 </template>
 
 <script>
+  import api from '@/api/api'
   export default {
     name: "NurseHistory",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
-        customerList: [
-          {
-            customerContact: 'zzz'
-          }
-        ]
+        nurseHistory: []
       }
     },
     methods: {
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getNurseHistory({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.nurseHistory = res.data
+          this.totalNum = res.totalNum
+        })
+      },
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
+      },
+      mydelete(row) {
+        this.$confirm('确定删除吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.deleteNurseHistory({id: row.id}).then(() => {
+            this.$notify.success({
+              title: '成功',
+              message: '删除成功'
+            })
+            this.search()
+          })
+        }).catch(() => {})
       },
       changeStatus (value) {
         console.log(value)
       }
+    },
+    activated () {
+      this.search()
+      api.getNurseContent().then(res => {
+        // console.log(res.data)
+        let nc = {}
+        res.data.forEach(cur => {
+          nc[cur.id] = cur.name
+        })
+        localStorage.setItem('nurseContent', JSON.stringify(nc))
+      })
     }
   }
 </script>

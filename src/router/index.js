@@ -25,6 +25,7 @@ const AddCheckIn = () => import('@/views/check-in/AddCheckIn.vue')
 const AddCheckOut = () => import('@/views/check-out/AddCheckOut.vue')
 const AddGoOut = () => import('@/views/go-out/AddGoOut.vue')
 const AddNurseContent = () => import('@/views/nurse-content/AddNurseContent.vue')
+const AddNurseHistory = () => import('@/views/nurse-history/AddNurseHistory.vue')
 // const EmployeeManage = () => import('@/views/sys/EmployeeManage')
 // const UserFeedback = () => import('@/views/feedback/UserFeedback')
 // const EditCompany = () => import('@/views/acc/EditCompany')
@@ -239,6 +240,16 @@ const routes = [
     },
     children: [
       { path: '', component: NurseHistory }
+    ]
+  },
+  {
+    path: '/nurse-history/add',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: AddNurseHistory }
     ]
   },
   {
