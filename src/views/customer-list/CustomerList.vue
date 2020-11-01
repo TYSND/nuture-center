@@ -17,32 +17,43 @@
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
+                         prop="name"
                          label="姓名"
                          show-overflow-tooltip
                          min-width="60">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
+                         prop="sex"
                          label="性别"
                          show-overflow-tooltip
                          min-width="40">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
+                         prop="age"
                          label="年龄"
                          show-overflow-tooltip
                          min-width="40">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
+                         prop="bedId"
                          label="床位"
+                         show-overflow-tooltip
+                         min-width="80">
+          <template v-slot="scope">
+            <span>
+              {{scope.row.roomNumber}}-{{scope.row.bedId}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="nurseLevel"
+                         label="护理级别"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="护理级别"
+                         prop="housekeeperName"
+                         label="健康管家"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
@@ -66,7 +77,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -75,11 +86,12 @@
 </template>
 
 <script>
+  import api from '@/api/api.js'
   export default {
     name: "CustomerList",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
         customerList: [
@@ -90,8 +102,18 @@
       }
     },
     methods: {
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getCustomerListByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.customerList = res.data
+          this.totalNum = res.totalNum
+        })
+      },
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
       },
       changeStatus (value) {
         console.log(value)
@@ -100,6 +122,9 @@
         console.log(row)
         this.$router.push('/meal-manage')
       }
+    },
+    activated () {
+      this.search()
     }
   }
 </script>

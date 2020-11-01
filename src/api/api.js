@@ -75,7 +75,7 @@ const getCustomerList = () => request({
 
 // 获取分页客户列表
 const getCustomerListByPage = params => request({
-  url: '/customer',
+  url: '/customer/getPage',
   method: 'get',
   params
 })
