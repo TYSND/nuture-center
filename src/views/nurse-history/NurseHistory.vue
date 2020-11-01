@@ -113,11 +113,26 @@
     },
     activated () {
       this.search()
+      // 获取用户列表
+      api.getCustomerList().then(res => {
+        let cl = {}
+        res.data.forEach(cur => {
+          cl[cur.id] = {
+            name: cur.name,
+            nurseLevelId: cur.nurseLevelId
+          }
+        })
+        localStorage.setItem('customerList', JSON.stringify(cl))
+      })
+      // 获取护理内容列表
       api.getNurseContent().then(res => {
         // console.log(res.data)
         let nc = {}
         res.data.forEach(cur => {
-          nc[cur.id] = cur.name
+          nc[cur.id] = {
+            name: cur.name,
+            nurseLevelId: cur.nurseLevelId
+          }
         })
         localStorage.setItem('nurseContent', JSON.stringify(nc))
       })

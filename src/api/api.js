@@ -67,6 +67,19 @@ const deleteNurseHistory = data => request({
   data
 })
 
+// 获取所有客户列表
+const getCustomerList = () => request({
+  url: '/customer/getAll',
+  method: 'get'
+})
+
+// 获取分页客户列表
+const getCustomerListByPage = params => request({
+  url: '/customer',
+  method: 'get',
+  params
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -78,5 +91,7 @@ export default {
   deleteNurseContent,
   getNurseHistory,
   addNurseHistory,
-  deleteNurseHistory
+  deleteNurseHistory,
+  getCustomerList,
+  getCustomerListByPage
 }

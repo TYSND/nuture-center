@@ -8,11 +8,15 @@
         size="medium"
         :rules="rules">
       <el-form-item label="用户" prop="customerId">
-        <el-select class="form-item" v-model="form.customerId" placeholder="用户">
+        <el-select
+            class="form-item"
+            v-model="form.customerId"
+            @change="changeCustomer"
+            placeholder="用户">
           <el-option
               v-for="(val, key) in customerList"
               :key="key"
-              :label="val"
+              :label="val.name"
               :value="key"
           ></el-option>
         </el-select>
@@ -22,7 +26,7 @@
           <el-option
               v-for="(val, key) in nurseContent"
               :key="key"
-              :label="val"
+              :label="val.name"
               :value="key"
           ></el-option>
         </el-select>
@@ -55,9 +59,21 @@
         },
         clicked: false,
         customerList: {
-          2: '王二'
+          2: {
+            name: '王二',
+            nurseLevelId: 1
+          }
         },
-        nurseContent: {},
+        nurseContent: {
+          1: {
+            name: '洗头',
+            nurseLevelId: 1
+          },
+          2: {
+            name: '体检',
+            nurseLevelId: 2
+          }
+        },
         rules: {
           customerId: [
             {required: true, message: '请选择用户', trigger: 'blur'}
@@ -86,9 +102,22 @@
             console.log(this.form)
           }
         })
+      },
+      changeCustomer (val) {
+        console.log('customer',this.customerList[val])
+        this.nurseContent = JSON.parse(localStorage.getItem('nurseContent'))
+        let res = {}
+        for (let key in this.nurseContent) {
+          if (this.nurseContent[key].nurseLevelId === this.customerList[val].nurseLevelId) {
+            res[key] = this.nurseContent[key]
+          }
+        }
+        this.nurseContent = res
+        console.log(this.nurseContent)
       }
     },
     activated () {
+      this.customerList = JSON.parse(localStorage.getItem('customerList'))
       this.nurseContent = JSON.parse(localStorage.getItem('nurseContent'))
       console.log(this.nurseContent)
     }
