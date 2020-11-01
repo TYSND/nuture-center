@@ -70,8 +70,8 @@
                          style="overflow: auto">
           <template v-slot="scope">
             <div class="opt-links">
-              <el-link type="primary" :underline="false" @click="edit(scope.row)">设置护理级别</el-link>
-              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">设置健康管家</el-link>
+              <el-link type="primary" :underline="false" @click="setNurseLevel(scope.row)">设置护理级别</el-link>
+              <el-link class="opt-link" type="danger" :underline="false" @click="setHouseKeeper(scope.row)">设置健康管家</el-link>
               <el-link type="success" :underline="false" @click="setMeal(scope.row)">设置菜单</el-link>
             </div>
           </template>
@@ -88,6 +88,45 @@
           :total="totalNum">
       </el-pagination>
     </div>
+
+    <el-dialog width="400px" title="护理级别" :visible.sync="nurseLevelDialog">
+      <el-form :model="nurseLevelForm" label-position="top">
+        <el-form-item label="护理级别">
+          <el-select class="form-item" v-model="nurseLevelForm.nurseLevelId" placeholder="请选择护理级别">
+            <el-option
+                v-for="(val, key) in nurseLevel"
+                :key="key"
+                :label="val"
+                :value="key"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="nurseLevelDialog = false">取 消</el-button>
+        <el-button  @click="submitNurseLevel" type="primary" :loading="clicked" >确 定</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog width="400px" title="健康管家" :visible.sync="houseKeeperDialog">
+      <el-form :model="houseKeeperForm" label-position="top">
+        <el-form-item label="健康管家">
+          <el-select class="form-item" v-model="houseKeeperForm.housekeeperId" placeholder="请选择健康管家">
+            <el-option
+                v-for="(val, key) in houseKeeper"
+                :key="key"
+                :label="val"
+                :value="key"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="houseKeeperDialog = false">取 消</el-button>
+        <el-button type="primary" @click="submitHouseKeepter" :loading="clicked" >确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -100,11 +139,21 @@
         pageNum: 1,
         pageSize: 10,
         totalNum: 0,
-        customerList: [
-          {
-            customerContact: '王小明'
-          }
-        ]
+        nurseLevelDialog: false,
+        houseKeeperDialog: false,
+        customerList: [],
+        // curCustomer: {},
+        nurseLevel: {},
+        houseKeeper: {},
+        clicked: false,
+        nurseLevelForm: {
+          id: '',
+          nurseLevelId: ''
+        },
+        houseKeeperForm: {
+          id: '',
+          housekeeperId: ''
+        }
       }
     },
     methods: {
@@ -124,13 +173,71 @@
       changeStatus (value) {
         console.log(value)
       },
+      setNurseLevel (row) {
+        // console.log(row)
+        // this.curCustomer = row
+        this.nurseLevelForm.id = row.id
+        this.nurseLevelForm.nurseLevelId = row.nurseLevelId.toString()
+        this.nurseLevelDialog = true
+      },
+      setHouseKeeper (row) {
+        // console.log(row)
+        // this.curCustomer = row
+        this.houseKeeperForm.id = row.id
+        this.houseKeeperForm.housekeeperId = row.housekeeperId.toString()
+        this.houseKeeperDialog = true
+      },
       setMeal (row) {
         console.log(row)
         this.$router.push('/meal-manage')
+      },
+      submitNurseLevel () {
+        this.clicked = true
+        api.setCustomerNurseLevel(this.nurseLevelForm).then(() => {
+          this.clicked = false
+          this.$notify.success({ title: '成功', message: '修改成功' })
+          this.nurseLevelDialog = false
+          this.search()
+        }).catch(() => {
+          this.clicked = false
+          this.nurseLevelDialog = false
+        })
+      },
+      submitHouseKeepter () {
+        this.clicked = true
+        api.setCustomerHouseKeeper(this.houseKeeperForm).then(() => {
+          this.clicked = false
+          this.$notify.success({ title: '成功', message: '修改成功' })
+          this.houseKeeperDialog = false
+          this.search()
+        }).catch(() => {
+          this.clicked = false
+          this.houseKeeperDialog = false
+        })
       }
     },
     activated () {
       this.search()
+      // 获取健康管家
+      api.getHouseKeeper().then(res => {
+        // console.log(res.data)
+        let hk = {}
+        res.data.forEach(cur => {
+          hk[cur.id] = cur.name
+        })
+        this.houseKeeper = hk
+        // localStorage.setItem('houseKeeper', JSON.stringify(hk))
+      })
+      // 获取护理级别
+      api.getNurseLevel().then(res => {
+        // console.log(res.data)
+        let nl = {}
+        res.data.forEach(cur => {
+          nl[cur.id] = cur.name
+        })
+        this.nurseLevel = nl
+        // localStorage.setItem('nurseLevel', JSON.stringify(nl))
+      })
     }
   }
 </script>

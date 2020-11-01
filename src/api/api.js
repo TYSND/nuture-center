@@ -106,6 +106,20 @@ const deleteCustomer = data => request({
   data
 })
 
+// 设置用户护理级别
+const setCustomerNurseLevel = data => request({
+  url: '/customer/nurse_level',
+  method: 'put',
+  data
+})
+
+// 设置用户健康管家
+const setCustomerHouseKeeper = data => request({
+  url: '/customer/housekeeper',
+  method: 'put',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -123,5 +137,7 @@ export default {
   getCustomerListByPage,
   getHouseKeeper,
   addCustomer,
-  deleteCustomer
+  deleteCustomer,
+  setCustomerNurseLevel,
+  setCustomerHouseKeeper
 }
