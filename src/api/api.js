@@ -120,6 +120,26 @@ const setCustomerHouseKeeper = data => request({
   data
 })
 
+// 获取膳食日历
+const getMealCalendar = () => request({
+  url: '/meal_calendar/getAll',
+  method: 'get'
+})
+
+// 获取膳食日历
+const addMeal = data => request({
+  url: '/meal_calendar',
+  method: 'post',
+  data
+})
+
+// 获取膳食日历
+const deleteMeal = data => request({
+  url: '/meal_calendar',
+  method: 'delete',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -139,5 +159,8 @@ export default {
   addCustomer,
   deleteCustomer,
   setCustomerNurseLevel,
-  setCustomerHouseKeeper
+  setCustomerHouseKeeper,
+  getMealCalendar,
+  addMeal,
+  deleteMeal
 }
