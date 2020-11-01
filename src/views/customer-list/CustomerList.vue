@@ -46,6 +46,12 @@
           </template>
         </el-table-column>
         <el-table-column header-align="center" align="center"
+                         prop="checkInTime"
+                         label="入住时间"
+                         show-overflow-tooltip
+                         min-width="80">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
                          prop="nurseLevel"
                          label="护理级别"
                          show-overflow-tooltip

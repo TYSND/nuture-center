@@ -153,7 +153,7 @@
       }
     },
     created () {
-      api.getBedList({
+      api.getBedListByPage({
         pageNum: this.pageNum,
         pageSize: this.pageSize
       }).then(res => {

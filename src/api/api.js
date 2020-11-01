@@ -1,8 +1,14 @@
 import request from './request.js'
 
 // 获取床位列表
-const getBedList = params => request({
+const getBedList = () => request({
   url: '/bed/getAll',
+  method: 'get'
+})
+
+// 获取床位列表
+const getBedListByPage = params => request({
+  url: '/bed/getPage',
   method: 'get',
   params
 })
@@ -80,9 +86,23 @@ const getCustomerListByPage = params => request({
   params
 })
 
+// 获取健康管家
+const getHouseKeeper = () => request({
+  url: '/housekeeper/getAll',
+  method: 'get'
+})
+
+// 入住登记
+const addCustomer = data => request({
+  url: '/customer',
+  method: 'post',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
+  getBedListByPage,
   addBed,
   getNurseLevel,
   getNurseContent,
@@ -93,5 +113,7 @@ export default {
   addNurseHistory,
   deleteNurseHistory,
   getCustomerList,
-  getCustomerListByPage
+  getCustomerListByPage,
+  getHouseKeeper,
+  addCustomer
 }

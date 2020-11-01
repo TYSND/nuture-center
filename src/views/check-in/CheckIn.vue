@@ -8,132 +8,81 @@
       <div class="btns">
         <el-button class="btn" type="primary" size="small" @click="$router.push('/check-in/add')">登记</el-button>
       </div>
-      <div class="radio-group">
-        <el-radio-group v-model="elderType" size="small" @change="changeType">
-          <el-radio-button label="活力老人"></el-radio-button>
-          <el-radio-button label="自理老人"></el-radio-button>
-          <el-radio-button label="护理老人"></el-radio-button>
-        </el-radio-group>
-      </div>
+<!--      <div class="radio-group">-->
+<!--        <el-radio-group v-model="elderType" size="small" @change="changeType">-->
+<!--          <el-radio-button label="活力老人"></el-radio-button>-->
+<!--          <el-radio-button label="自理老人"></el-radio-button>-->
+<!--          <el-radio-button label="护理老人"></el-radio-button>-->
+<!--        </el-radio-group>-->
+<!--      </div>-->
     </div>
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="elderList"
+          :data="customerList"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
-                         label="客户姓名"
+                         prop="name"
+                         label="姓名"
+                         show-overflow-tooltip
+                         min-width="60">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="sex"
+                         label="性别"
+                         show-overflow-tooltip
+                         min-width="40">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="age"
+                         label="年龄"
+                         show-overflow-tooltip
+                         min-width="40">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="bedId"
+                         label="床位"
+                         show-overflow-tooltip
+                         min-width="80">
+          <template v-slot="scope">
+            <span>
+              {{scope.row.roomNumber}}-{{scope.row.bedId}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="checkInTime"
+                         label="入住时间"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="性别"
+                         prop="nurseLevel"
+                         label="护理级别"
                          show-overflow-tooltip
-                         min-width="120">
+                         min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="年龄"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="身份证号"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="房间号"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="所属楼房"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="档案号"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="入住时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="合同到期时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="联系电话"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="家属"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="陪住人"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="评估医生"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="负责医生"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="护工"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
+                         prop="housekeeperName"
                          label="健康管家"
                          show-overflow-tooltip
-                         min-width="90">
+                         min-width="80">
         </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="备注"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         label="操作"
-                         min-width="100"
-                         fixed="right">
-          <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
-            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-          </template>
-        </el-table-column>
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         label="操作"-->
+<!--                         min-width="100"-->
+<!--                         fixed="right"-->
+<!--                         style="overflow: auto">-->
+<!--          <template v-slot="scope">-->
+<!--            <div class="opt-links">-->
+<!--              <el-link type="primary" :underline="false" @click="edit(scope.row)">设置护理级别</el-link>-->
+<!--              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">设置健康管家</el-link>-->
+<!--              <el-link type="success" :underline="false" @click="setMeal(scope.row)">设置菜单</el-link>-->
+<!--            </div>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
       <el-pagination
           v-show="totalNum > pageSize"
@@ -141,7 +90,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -151,6 +100,7 @@
 
 <script>
   import { mapMutations } from 'vuex'
+  import api from '@/api/api';
   export default {
     name: "CheckIn",
     data () {
@@ -158,26 +108,64 @@
         pageNum: 0,
         pageSize: 10,
         totalNum: 0,
-        elderType: '活力老人',
-        elderList: [
+        customerList: [
           {
-            customerContact: 'aaa'
+            customerContact: '王小明'
           }
         ]
       }
     },
     methods: {
       ...mapMutations(['setCheckInInfo']),
-      changePage (page) {
-        this.search(page - 1)
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getCustomerListByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.customerList = res.data
+          this.totalNum = res.totalNum
+        })
       },
-      changeType (value) {
-        console.log(value)
+      changePage (page) {
+        this.search(page)
       },
       edit (row) {
         this.setCheckInInfo(row)
         this.$router.push('/check-in/edit')
       }
+    },
+    activated () {
+      this.search()
+      // 获取未入住的床位
+      api.getBedList().then(res => {
+        // console.log(res.data)
+        let bl = {}
+        res.data.forEach(cur => {
+          if (cur.bedStatus === 0) {
+            bl[cur.id] = cur.roomNumber + '-' + cur.id
+          }
+        })
+        localStorage.setItem('bedList', JSON.stringify(bl))
+      })
+      // 获取健康管家
+      api.getHouseKeeper().then(res => {
+        // console.log(res.data)
+        let hk = {}
+        res.data.forEach(cur => {
+          hk[cur.id] = cur.name
+        })
+        localStorage.setItem('houseKeeper', JSON.stringify(hk))
+      })
+      // 获取护理级别
+      api.getNurseLevel().then(res => {
+        // console.log(res.data)
+        let nl = {}
+        res.data.forEach(cur => {
+          nl[cur.id] = cur.name
+        })
+        localStorage.setItem('nurseLevel', JSON.stringify(nl))
+      })
     }
   }
 </script>
