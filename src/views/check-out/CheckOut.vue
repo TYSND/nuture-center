@@ -12,102 +12,64 @@
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="elderList"
+          :data="customerList"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
-                         label="客户姓名"
+                         prop="name"
+                         label="姓名"
+                         show-overflow-tooltip
+                         min-width="60">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="sex"
+                         label="性别"
+                         show-overflow-tooltip
+                         min-width="40">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="age"
+                         label="年龄"
+                         show-overflow-tooltip
+                         min-width="40">
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="bedId"
+                         label="床位"
+                         show-overflow-tooltip
+                         min-width="80">
+          <template v-slot="scope">
+            <span>
+              {{scope.row.roomNumber}}-{{scope.row.bedId}}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column header-align="center" align="center"
+                         prop="checkInTime"
+                         label="入住时间"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="性别"
+                         prop="nurseLevel"
+                         label="护理级别"
                          show-overflow-tooltip
-                         min-width="120">
+                         min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="年龄"
+                         prop="housekeeperName"
+                         label="健康管家"
                          show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="档案号"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="入住时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="退住时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="退住类型"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="退住原因"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="状态"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="申请时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审核意见"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审核人"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审核时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="备注"
-                         show-overflow-tooltip
-                         min-width="90">
+                         min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
                          label="操作"
                          min-width="100"
-                         fixed="right">
+                         fixed="right"
+                         style="overflow: auto">
           <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
-            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-            <el-link class="opt-link" type="success" :underline="false" @click="mydelete(scope.row)">审核</el-link>
+            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">退住</el-link>
           </template>
         </el-table-column>
       </el-table>
@@ -117,7 +79,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -127,6 +89,7 @@
 
 <script>
   import { mapMutations } from 'vuex'
+  import api from '@/api/api';
   export default {
     name: "CheckOut",
     data () {
@@ -134,20 +97,52 @@
         pageNum: 0,
         pageSize: 10,
         totalNum: 0,
-        elderType: '活力老人',
-        elderList: []
+        customerList: [
+          {
+            customerContact: '王小明'
+          }
+        ]
       }
     },
     methods: {
       ...mapMutations(['setCheckOutInfo']),
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getCustomerListByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.customerList = res.data
+          this.totalNum = res.totalNum
+        })
+      },
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
+      },
+      mydelete (row) {
+        this.$confirm('确定删除吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.deleteCustomer({
+            id: row.id
+          }).then(() => {
+            this.$notify.success({
+              title: '成功',
+              message: '删除成功'
+            })
+            this.search()
+          })
+        }).catch(() => {})
       },
       edit (row) {
-        // console.log(row)
-        this.setCheckOutInfo(row)
-        this.$router.push('/check-out/edit')
+        this.setCheckInInfo(row)
+        this.$router.push('/check-in/edit')
       }
+    },
+    activated () {
+      this.search()
     }
   }
 </script>

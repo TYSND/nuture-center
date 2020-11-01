@@ -76,18 +76,18 @@
 <!--                         show-overflow-tooltip-->
 <!--                         min-width="150">-->
 <!--        </el-table-column>-->
-        <el-table-column header-align="center" align="center"
-                         label="操作"
-                         min-width="100"
-                         fixed="right">
-          <template v-slot="scope">
-            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-<!--            <div class="opt-links">-->
-<!--              <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>-->
-<!--              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>-->
-<!--            </div>-->
-          </template>
-        </el-table-column>
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         label="操作"-->
+<!--                         min-width="100"-->
+<!--                         fixed="right">-->
+<!--          <template v-slot="scope">-->
+<!--            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>-->
+<!--&lt;!&ndash;            <div class="opt-links">&ndash;&gt;-->
+<!--&lt;!&ndash;              <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>&ndash;&gt;-->
+<!--&lt;!&ndash;              <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
       <el-pagination
           v-show="totalNum > pageSize"

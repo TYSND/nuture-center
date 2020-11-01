@@ -99,6 +99,13 @@ const addCustomer = data => request({
   data
 })
 
+// 入住登记
+const deleteCustomer = data => request({
+  url: '/customer',
+  method: 'delete',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -115,5 +122,6 @@ export default {
   getCustomerList,
   getCustomerListByPage,
   getHouseKeeper,
-  addCustomer
+  addCustomer,
+  deleteCustomer
 }
