@@ -140,6 +140,20 @@ const deleteMeal = data => request({
   data
 })
 
+// 获取用户菜单
+const getCustomerMeal = params => request({
+  url: '/meal_manage',
+  method: 'get',
+  params
+})
+
+// 设置用户菜单
+const setCustomerMeal = data => request({
+  url: '/meal_manage',
+  method: 'put',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -162,5 +176,7 @@ export default {
   setCustomerHouseKeeper,
   getMealCalendar,
   addMeal,
-  deleteMeal
+  deleteMeal,
+  getCustomerMeal,
+  setCustomerMeal
 }

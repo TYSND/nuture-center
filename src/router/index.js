@@ -18,6 +18,7 @@ const NurseContent = () => import('@/views/nurse-content/NurseContent.vue')
 const NurseHistory = () => import('@/views/nurse-history/NurseHistory.vue')
 const NurseLevel = () => import('@/views/nurse-level/NurseLevel.vue')
 const ServiceFocus = () => import('@/views/service-focus/ServiceFocus.vue')
+const BuyHistory = () => import('@/views/service-focus/BuyHistory.vue')
 const ServiceObj = () => import('@/views/service-obj/ServiceObj.vue')
 
 const AddBed = () => import('@/views/bed-manage/AddBed.vue')
@@ -269,7 +270,8 @@ const routes = [
       requireAuth: true
     },
     children: [
-      { path: '', component: ServiceFocus }
+      { path: '', component: ServiceFocus },
+      { path: 'history', component: BuyHistory }
     ]
   },
   {

@@ -1,13 +1,13 @@
 <template>
-  <div class="service-focus">
+  <div class="buy-history">
     <div class="title">
-      <span class="title-content">服务关注</span>
+      <span class="title-content">购买记录</span>
       <span class="num">数量：{{totalNum}}</span>
     </div>
     <div class="interactive">
-      <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/service-focus/history')">购买记录</el-button>
-      </div>
+<!--      <div class="btns">-->
+<!--        <el-button class="btn" type="primary" size="small" @click="$router.push('/service-focus/history')">购买记录</el-button>-->
+<!--      </div>-->
     </div>
     <div class="search-res">
       <el-table
@@ -96,7 +96,7 @@
 
 <script>
   export default {
-    name: "ServiceFocus",
+    name: "BuyHistory",
     data () {
       return {
         pageNum: 0,
@@ -114,7 +114,7 @@
 </script>
 
 <style lang="less" scoped>
-.service-focus {
+.buy-history {
   .title {
     padding: 20px;
     border-bottom: 1px solid #EBEEF5;

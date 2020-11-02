@@ -72,7 +72,7 @@
             <div class="opt-links">
               <el-link type="primary" :underline="false" @click="setNurseLevel(scope.row)">设置护理级别</el-link>
               <el-link class="opt-link" type="danger" :underline="false" @click="setHouseKeeper(scope.row)">设置健康管家</el-link>
-              <el-link type="success" :underline="false" @click="setMeal(scope.row)">设置菜单</el-link>
+              <el-link type="success" :underline="false" @click="setMeal(scope.row)" :disabled="clicked">设置菜单</el-link>
             </div>
           </template>
         </el-table-column>
@@ -127,6 +127,28 @@
       </div>
     </el-dialog>
 
+    <el-dialog width="400px" title="菜单" :visible.sync="mealDialog">
+      <el-form :model="mealForm" label-position="top">
+        <el-form-item
+            v-for="(day, index) in mealCalendar"
+            :key="index"
+            :label="week[index]">
+          <el-select class="form-item" v-model="mealForm.toSend[index-1].mealCalendarId" placeholder="请选择套餐">
+            <el-option
+                v-for="val in day"
+                :key="val.id"
+                :label="val.setName"
+                :value="val.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="mealDialog = false">取 消</el-button>
+        <el-button type="primary" @click="submitMeal" :loading="clicked" >确 定</el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -141,10 +163,12 @@
         totalNum: 0,
         nurseLevelDialog: false,
         houseKeeperDialog: false,
+        mealDialog: false,
         customerList: [],
         // curCustomer: {},
         nurseLevel: {},
         houseKeeper: {},
+        mealCalendar: {},
         clicked: false,
         nurseLevelForm: {
           id: '',
@@ -153,6 +177,62 @@
         houseKeeperForm: {
           id: '',
           housekeeperId: ''
+        },
+        week: {
+          1: '周一',
+          2: '周二',
+          3: '周三',
+          4: '周四',
+          5: '周五',
+          6: '周六',
+          7: '周七',
+        },
+        test: '',
+        mealForm: {
+          toSend: [
+            // 1
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 1
+            },
+            // 2
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 2
+            },
+            // 3
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 3
+            },
+            // 4
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 4
+            },
+            // 5
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 5
+            },
+            // 6
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 6
+            },
+            // 7
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 7
+            }
+          ]
         }
       }
     },
@@ -188,8 +268,88 @@
         this.houseKeeperDialog = true
       },
       setMeal (row) {
-        console.log(row)
-        this.$router.push('/meal-manage')
+        // console.log(row)
+        // console.log('mmmmmmmmm',this.mealCalendar)
+        // this.getMealCalendar()
+        this.clicked = true
+        this.mealForm = {
+          toSend: [
+            // 1
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 1
+            },
+            // 2
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 2
+            },
+            // 3
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 3
+            },
+            // 4
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 4
+            },
+            // 5
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 5
+            },
+            // 6
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 6
+            },
+            // 7
+            {
+              customerId: '',
+              mealCalendarId: '',
+              weekday: 7
+            }
+          ]
+        }
+        for (let i = 0 ; i < this.mealForm.toSend.length; i++) {
+          this.mealForm.toSend[i].customerId = row.id
+        }
+        api.getCustomerMeal({
+          customerId: row.id
+        }).then(res => {
+          console.log('sadfabgfefewrebfedw')
+          res.data.forEach(cur => {
+            // console.log('cur', cur)
+            // this.mealForm.toSend[cur.weekday-1].weekday = cur.weekday
+            this.mealForm.toSend[cur.weekday-1].mealCalendarId = cur.mealCalendarId === 0 ? '' : cur.mealCalendarId
+            // console.log('asdfsfwfeQ',typeof this.mealForm.toSend[cur.weekday-1].mealCalendarId)
+            // console.log(typeof cur.mealCalendarId)
+          })
+          this.clicked = false
+          this.mealDialog = true
+        }).catch(() => {
+          this.clicked = false
+        })
+
+      },
+      getMealCalendar () {
+        return api.getMealCalendar().then(res => {
+          res.data.forEach(cur => {
+            console.log(cur.setName)
+            if (!this.mealCalendar[cur.weekday]) {
+              this.mealCalendar[cur.weekday] = []
+            }
+            this.mealCalendar[cur.weekday].push(cur)
+          })
+          console.log('mealCalendar',this.mealCalendar)
+        })
       },
       submitNurseLevel () {
         this.clicked = true
@@ -213,6 +373,18 @@
         }).catch(() => {
           this.clicked = false
           this.houseKeeperDialog = false
+        })
+      },
+      submitMeal () {
+        this.clicked = true
+        api.setCustomerMeal(this.mealForm.toSend).then(() => {
+          this.clicked = false
+          this.$notify.success({ title: '成功', message: '修改成功' })
+          this.mealDialog = false
+          this.search()
+        }).catch(() => {
+          this.clicked = false
+          this.mealDialog = false
         })
       }
     },
@@ -238,6 +410,8 @@
         this.nurseLevel = nl
         // localStorage.setItem('nurseLevel', JSON.stringify(nl))
       })
+      // 获取菜单
+      this.getMealCalendar()
     }
   }
 </script>
