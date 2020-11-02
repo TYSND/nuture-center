@@ -264,14 +264,23 @@ const routes = [
     ]
   },
   {
-    path: '/service-focus',
+    path: '/service-focus/:customerId',
     component: HomeView,
     meta: {
       requireAuth: true
     },
     children: [
-      { path: '', component: ServiceFocus },
-      { path: 'history', component: BuyHistory }
+      { path: '', component: ServiceFocus }
+    ]
+  },
+  {
+    path: '/buy-history',
+    component: HomeView,
+    meta: {
+      requireAuth: true
+    },
+    children: [
+      { path: '', component: BuyHistory }
     ]
   },
   {

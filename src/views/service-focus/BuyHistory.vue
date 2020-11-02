@@ -12,73 +12,43 @@
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="serviceList"
+          :data="buyList"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
+                         prop="customerName"
                          label="客户姓名"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
+                         prop="nurseContentName"
                          label="护理项目"
                          show-overflow-tooltip
                          min-width="120">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="上期剩余数量"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
+                         prop="amount"
                          label="购买数量"
                          show-overflow-tooltip
                          min-width="90">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="总数量"
+                         prop="totalPrice"
+                         label="总价"
                          show-overflow-tooltip
                          min-width="90">
         </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="本期剩余数量"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="购买时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="服务状态"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="备注"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         label="操作"
-                         min-width="100"
-                         fixed="right">
-          <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="edit(scope.row)">购买</el-link>
-            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">立即提醒</el-link>
-          </template>
-        </el-table-column>
+<!--        <el-table-column header-align="center" align="center"-->
+<!--                         label="操作"-->
+<!--                         min-width="100"-->
+<!--                         fixed="right">-->
+<!--          <template v-slot="scope">-->
+<!--            <el-link type="primary" :underline="false" @click="edit(scope.row)">购买</el-link>-->
+<!--            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">立即提醒</el-link>-->
+<!--          </template>-->
+<!--        </el-table-column>-->
       </el-table>
       <el-pagination
           v-show="totalNum > pageSize"
@@ -95,20 +65,34 @@
 </template>
 
 <script>
+  import api from '@/api/api';
+
   export default {
     name: "BuyHistory",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
-        serviceList: []
+        buyList: []
       }
     },
     methods: {
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getBuyHistoryByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.buyList = res.data
+        })
+      },
       changePage (page) {
         this.search(page)
       }
+    },
+    activated () {
+      this.search()
     }
   }
 </script>

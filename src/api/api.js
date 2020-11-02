@@ -154,6 +154,27 @@ const setCustomerMeal = data => request({
   data
 })
 
+// 获取服务关注（商品列表）
+const getServiceFocus = params => request({
+  url: '/service_focus',
+  method: 'get',
+  params
+})
+
+// 购买服务关注
+const buyServiceFocus = data => request({
+  url: '/service_focus/buy',
+  method: 'post',
+  data
+})
+
+// 获取购买记录
+const getBuyHistoryByPage = params => request({
+  url: '/buy_record/getPage',
+  method: 'get',
+  params
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -178,5 +199,8 @@ export default {
   addMeal,
   deleteMeal,
   getCustomerMeal,
-  setCustomerMeal
+  setCustomerMeal,
+  getServiceFocus,
+  buyServiceFocus,
+  getBuyHistoryByPage
 }

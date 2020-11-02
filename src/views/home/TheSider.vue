@@ -75,7 +75,7 @@
           // },
           {
             name: '服务关注',
-            route: '/service-focus',
+            route: '/buy-history',
             icon: 'el-icon-message-solid'
           }
         ]

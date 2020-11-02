@@ -73,6 +73,7 @@
               <el-link type="primary" :underline="false" @click="setNurseLevel(scope.row)">设置护理级别</el-link>
               <el-link class="opt-link" type="danger" :underline="false" @click="setHouseKeeper(scope.row)">设置健康管家</el-link>
               <el-link type="success" :underline="false" @click="setMeal(scope.row)" :disabled="clicked">设置菜单</el-link>
+              <el-link type="warning" :underline="false" @click="$router.push('/service-focus/' + scope.row.id)">服务关注</el-link>
             </div>
           </template>
         </el-table-column>
