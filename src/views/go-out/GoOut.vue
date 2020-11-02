@@ -6,104 +6,32 @@
     </div>
     <div class="interactive">
       <div class="btns">
-        <el-button class="btn" type="primary" size="small" @click="$router.push('/go-out/add')">登记</el-button>
-        <el-button class="btn" type="success" size="small" @click="$router.push('/add-customer')">审核</el-button>
+        <el-button class="btn" type="primary" size="small" @click="goOutDialog = true">新增离院记录</el-button>
+<!--        <el-button class="btn" type="success" size="small" @click="$router.push('/add-customer')">审核</el-button>-->
       </div>
     </div>
     <div class="search-res">
       <el-table
           ref="multipleTable"
-          :data="applicationList"
+          :data="goOutList"
           tooltip-effect="dark"
           border
           style="width: 100%">
         <el-table-column header-align="center" align="center"
-                         prop="customerContact"
+                         prop="customerName"
                          label="客户姓名"
                          show-overflow-tooltip
                          min-width="80">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerContactNum"
-                         label="性别"
+                         prop="outTime"
+                         label="离院时间"
                          show-overflow-tooltip
                          min-width="120">
         </el-table-column>
         <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="年龄"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="档案号"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="外出事由"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="外出时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="预计回院时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="实际回院时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="陪同人"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="与老人关系"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="陪同人电话"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审批状态"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审批人"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="审批时间"
-                         show-overflow-tooltip
-                         min-width="90">
-        </el-table-column>
-        <el-table-column header-align="center" align="center"
-                         prop="customerLevel"
-                         label="备注"
+                         prop="backTime"
+                         label="归院时间"
                          show-overflow-tooltip
                          min-width="90">
         </el-table-column>
@@ -112,9 +40,10 @@
                          min-width="100"
                          fixed="right">
           <template v-slot="scope">
-            <el-link type="primary" :underline="false" @click="edit(scope.row)">编辑</el-link>
-            <el-link class="opt-link" type="danger" :underline="false" @click="mydelete(scope.row)">删除</el-link>
-            <el-link class="opt-link" type="success" :underline="false" @click="mydelete(scope.row)">审核</el-link>
+            <el-link type="success" :underline="false" @click="leaveOff(scope.row)">销假</el-link>
+<!--            <div slot="footer" class="dialog-footer">-->
+<!--              -->
+<!--            </div>-->
           </template>
         </el-table-column>
       </el-table>
@@ -129,11 +58,38 @@
           :total="totalNum">
       </el-pagination>
     </div>
+    <el-dialog width="400px" title="新增离院记录" :visible.sync="goOutDialog">
+      <el-form :model="goOutForm" label-position="top">
+        <el-form-item label="用户">
+          <el-select class="form-item" v-model="goOutForm.customerId" placeholder="请选择用户">
+            <el-option
+                v-for="(val, key) in customerList"
+                :key="key"
+                :label="val"
+                :value="key"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="离院时间" prop="outTime	">
+          <el-date-picker
+              v-model="goOutForm.outTime"
+              type="datetime"
+              placeholder="选择日期时间"
+              value-format="yyyy-MM-dd HH:mm:ss">
+          </el-date-picker>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="goOutDialog = false">取 消</el-button>
+        <el-button  @click="addGoOut" type="primary" :loading="clicked" >确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
   import { mapMutations } from 'vuex'
+  import api from '@/api/api';
   export default {
     name: "GoOut",
     data () {
@@ -141,18 +97,90 @@
         pageNum: 0,
         pageSize: 10,
         totalNum: 0,
-        applicationList: []
+        goOutList: [],
+        customerList: {},
+        goOutDialog: false,
+        goOutForm: {
+          customerId: '',
+          outTime: ''
+        },
+        clicked: false
       }
     },
     methods: {
       ...mapMutations(['setGoOutInfo']),
+      search(pageNum = 1) {
+        this.pageNum = pageNum
+        api.getGoOutByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          this.goOutList = res.data
+        })
+      },
       changePage (page) {
         this.search(page - 1)
       },
-      edit (row) {
-        this.setGoOutInfo(row)
-        this.$router.push('/go-out/edit')
+      dateToString(date) {
+        const year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        month = month > 9 ? month : ('0' + month);
+        day = day > 9 ? day : ('0' + day);
+        hour = hour > 9 ? hour : ('0' + hour);
+        minute = minute > 9 ? minute : ('0' + minute);
+        second = second > 9 ? second : ('0' + second);
+        const dateTime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+        return dateTime;
+      },
+      leaveOff (row) {
+        // this.$router.push('/go-out/edit')
+        console.log(row.id)
+        let curTime = this.dateToString(new Date())
+        console.log(curTime)
+        this.$confirm('确定销假吗？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          api.leaveOff({
+            id: row.id,
+            backTime: curTime
+          }).then(() => {
+            this.$notify.success({
+              title: '成功',
+              message: '销假成功'
+            })
+            this.search()
+          })
+        }).catch(() => {})
+      },
+      addGoOut () {
+        this.clicked = true
+        api.addGoOut(this.goOutForm).then(() => {
+          this.clicked = false
+          this.$notify.success({ title: '成功', message: '修改成功' })
+          this.goOutDialog = false
+          this.search()
+        }).catch(() => {
+          this.clicked = false
+          this.goOutDialog = false
+        })
       }
+    },
+    activated () {
+      this.search()
+      // 获取用户列表
+      api.getCustomerList().then(res => {
+        let cl = {}
+        res.data.forEach(cur => {
+          cl[cur.id] = cur.name
+        })
+        this.customerList = cl
+      })
     }
   }
 </script>

@@ -175,6 +175,27 @@ const getBuyHistoryByPage = params => request({
   params
 })
 
+// 获取外出记录
+const getGoOutByPage = params => request({
+  url: '/go_out/getPage',
+  method: 'get',
+  params
+})
+
+// 销假
+const leaveOff = data => request({
+  url: '/go_out/leave_off',
+  method: 'put',
+  data
+})
+
+// 请假
+const addGoOut = data => request({
+  url: '/go_out',
+  method: 'post',
+  data
+})
+
 export default {
   // wxLoginCallback,
   getBedList,
@@ -202,5 +223,8 @@ export default {
   setCustomerMeal,
   getServiceFocus,
   buyServiceFocus,
-  getBuyHistoryByPage
+  getBuyHistoryByPage,
+  getGoOutByPage,
+  leaveOff,
+  addGoOut
 }
