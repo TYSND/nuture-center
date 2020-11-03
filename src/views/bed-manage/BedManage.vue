@@ -8,27 +8,18 @@
       <div class="btns">
         <el-button class="btn" type="primary" size="small" @click="$router.push('/bed-manage/add')">新增床位</el-button>
       </div>
-      <el-form class="form" ref="form" :model="form" :inline="true" size="small">
-        <el-form-item>
-          <el-select v-model="form.status" @change="changeStatus" placeholder="床位状态">
-            <el-option
-                v-for="(val, key) in bedStatus"
-                :key="key"
-                :label="val"
-                :value="key"
-            ></el-option>
-          </el-select>
-        </el-form-item>
+<!--      <el-form class="form" ref="form" :model="form" :inline="true" size="small">-->
 <!--        <el-form-item>-->
-<!--          <el-input v-model="form.name" placeholder="客户名称"></el-input>-->
+<!--          <el-select v-model="form.status" @change="changeStatus" placeholder="床位状态">-->
+<!--            <el-option-->
+<!--                v-for="(val, key) in bedStatus"-->
+<!--                :key="key"-->
+<!--                :label="val"-->
+<!--                :value="key"-->
+<!--            ></el-option>-->
+<!--          </el-select>-->
 <!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-input v-model="form.manager" placeholder="客户经理"></el-input>-->
-<!--        </el-form-item>-->
-<!--        <el-form-item>-->
-<!--          <el-button type="primary" size="small" @click="search(0)">搜索</el-button>-->
-<!--        </el-form-item>-->
-      </el-form>
+<!--      </el-form>-->
     </div>
     <div class="search-res">
       <el-table
@@ -162,6 +153,7 @@
           this.showList = this.bedInfo.filter(cur => cur.bedStatus === 0)
           console.log('0',this.showList)
         }
+        this.totalNum = this.showList.length
       },
       edit (row) {
         this.setBedInfo(row)
