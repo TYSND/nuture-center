@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 // import { Message } from 'element-ui'
 // import userApi from '@/api/user.js'
 
-const HomeIndex = () => import('@/views/home/HomeIndex.vue')
+// const HomeIndex = () => import('@/views/home/HomeIndex.vue')
 const HomeView = () => import('@/views/home/HomeView.vue')
 const BedManage = () => import('@/views/bed-manage/BedManage.vue')
 const CheckIn = () => import('@/views/check-in/CheckIn.vue')
@@ -45,13 +45,14 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    component: HomeView,
-    meta: {
-      requireAuth: true
-    },
-    children: [
-      { path: '', component: HomeIndex }
-    ]
+    redirect: '/bed-manage',
+    // component: HomeView,
+    // meta: {
+    //   requireAuth: true
+    // },
+    // children: [
+    //   { path: '', component: HomeIndex }
+    // ]
   },
   {
     path: '/bed-manage',
