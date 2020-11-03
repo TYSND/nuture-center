@@ -468,7 +468,9 @@
       }
       .opt-links {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
+        /*justify-content: space-between;*/
+        align-items: center;
         white-space: nowrap;
         overflow: auto;
         /deep/ .el-link--inner {
