@@ -98,7 +98,8 @@
         api.buyServiceFocus({
           customerId: this.customerId,
           nurseContentId: row.nurseContentId,
-          amount: this.buyNum
+          amount: this.buyNum,
+          price: row.price
         }).then(() => {
           this.popVisible = false
           this.$notify.success({ title: '成功', message: '购买成功' })
