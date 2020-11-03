@@ -74,7 +74,7 @@
     name: "ServiceFocus",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
         customerId: '',

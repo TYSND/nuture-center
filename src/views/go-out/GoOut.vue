@@ -120,7 +120,7 @@
         })
       },
       changePage (page) {
-        this.search(page - 1)
+        this.search(page)
       },
       dateToString(date) {
         const year = date.getFullYear();

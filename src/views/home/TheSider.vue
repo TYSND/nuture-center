@@ -74,7 +74,7 @@
           //   icon: 'el-icon-s-management'
           // },
           {
-            name: '服务关注',
+            name: '购买记录',
             route: '/buy-history',
             icon: 'el-icon-message-solid'
           }
