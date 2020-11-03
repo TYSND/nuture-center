@@ -53,7 +53,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -94,7 +94,7 @@
     name: "GoOut",
     data () {
       return {
-        pageNum: 0,
+        pageNum: 1,
         pageSize: 10,
         totalNum: 0,
         goOutList: [],
@@ -116,6 +116,7 @@
           pageSize: this.pageSize
         }).then(res => {
           this.goOutList = res.data
+          this.totalNum = res.totalNum
         })
       },
       changePage (page) {

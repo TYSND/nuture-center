@@ -31,6 +31,11 @@
     methods: {
       submit () {
         api.addBed({roomNumber: this.form.roomNumber}).then(res => {
+          this.$notify.success({
+            title: '成功',
+            message: '添加成功'
+          })
+          this.$router.push('/bed-manage')
           console.log(res)
         })
       },

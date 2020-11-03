@@ -56,7 +56,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -85,6 +85,7 @@
           pageSize: this.pageSize
         }).then(res => {
           this.buyList = res.data
+          this.totalNum = res.totalNum
         })
       },
       changePage (page) {

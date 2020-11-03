@@ -42,6 +42,9 @@
                          label="床位编号"
                          show-overflow-tooltip
                          min-width="240">
+          <template v-slot="scope">
+            {{scope.row.roomNumber + '-' + scope.row.id}}
+          </template>
         </el-table-column>
         <el-table-column header-align="left" align="left"
                          prop="bedStatus"
@@ -95,7 +98,7 @@
           background
           layout="prev, pager, next"
           @current-change="changePage"
-          :current-page="pageNum + 1"
+          :current-page="pageNum"
           :page-size="pageSize"
           :total="totalNum">
       </el-pagination>
@@ -131,6 +134,19 @@
     },
     methods: {
       ...mapMutations(['setBedInfo']),
+      search (pageNum = 1) {
+        this.pageNum = pageNum
+        api.getBedListByPage({
+          pageNum: this.pageNum,
+          pageSize: this.pageSize
+        }).then(res => {
+          console.log(res)
+          this.bedInfo = res.data
+          this.totalNum = res.totalNum
+          this.showList = this.bedInfo
+          console.log(this.showList)
+        })
+      },
       changePage (page) {
         this.search(page)
       },
@@ -152,17 +168,8 @@
         this.$router.push('/bed-manage/edit')
       }
     },
-    created () {
-      api.getBedListByPage({
-        pageNum: this.pageNum,
-        pageSize: this.pageSize
-      }).then(res => {
-        console.log(res)
-        this.bedInfo = res.data
-        this.totalNum = res.totalNum
-        this.showList = this.bedInfo
-        console.log(this.showList)
-      })
+    activated () {
+      this.search()
     }
   }
 </script>
