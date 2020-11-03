@@ -40,7 +40,7 @@
                          min-width="100"
                          fixed="right">
           <template v-slot="scope">
-            <el-link type="success" :underline="false" @click="leaveOff(scope.row)">销假</el-link>
+            <el-link v-if="scope.row.backTime === ''" type="success" :underline="false" @click="leaveOff(scope.row)">销假</el-link>
 <!--            <div slot="footer" class="dialog-footer">-->
 <!--              -->
 <!--            </div>-->
