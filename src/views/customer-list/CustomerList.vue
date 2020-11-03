@@ -342,6 +342,7 @@
       },
       getMealCalendar () {
         return api.getMealCalendar().then(res => {
+          this.mealCalendar = {}
           res.data.forEach(cur => {
             console.log(cur.setName)
             if (!this.mealCalendar[cur.weekday]) {
